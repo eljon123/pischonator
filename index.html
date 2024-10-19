@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Akinator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #4b0082;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #4b0082;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #6a0dad;
+        }
+
+        #result {
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #akinator-img {
+            width: 100px;
+            margin-bottom: 20px;
+            position: absolute;
+            top: -70px;
+            left: calc(50% - 50px);
+        }
+
+        #pischo-img {
+            display: none;
+            margin-top: 20px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="akinator-img" src="https://upload.wikimedia.org/wikipedia/commons/0/03/Akinator.png" alt="Akinator">
+        <h1>Mini Akinator</h1>
+        <p>Responde las siguientes preguntas:</p>
+        <div id="question-container">
+            <p id="question"></p>
+        </div>
+        <div class="buttons">
+            <button onclick="answer(true)">Sí</button>
+            <button onclick="answer(false)">No</button>
+        </div>
+        <div id="result"></div>
+        <img id="pischo-img" src="https://clips-media-assets2.twitch.tv/j1U_iRi2tDeCDowh63fl7A/43013350937-offset-1440-preview-480x272.jpg" alt="Pischo666">
+    </div>
+
+    <script>
+        let questions = [
+            "¿Es streamer?",
+            "¿Es de Jesús María?",
+            "¿Es hombre?"
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+
+        function loadQuestion() {
+            document.getElementById("question").textContent = questions[currentQuestion];
+        }
+
+        function answer(isYes) {
+            answers.push(isYes);
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                guess();
+            }
+        }
+
+        function guess() {
+            let result = "";
+
+            if (answers[0] === true && answers[1] === true && answers[2] === true) {
+                result = "¡Es Pischo666!";
+                document.getElementById("pischo-img").style.display = "block";
+            } else {
+                result = "No adiviné. Intenta de nuevo.";
+            }
+
+            document.getElementById("result").textContent = result;
+            document.getElementById("question-container").style.display = "none";
+            document.querySelector(".buttons").style.display = "none";
+        }
+
+        window.onload = function() {
+            loadQuestion();
+        };
+    </script>
+</body>
+</html>
